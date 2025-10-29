@@ -1,0 +1,14 @@
+.mat-drawer{
+    border-inline-end: 1px solid black;
+    border-radius: 0;
+    width: 20%;
+}
+
+.mat-toolbar{
+    background-color:rgb(201, 154, 255);
+}
+
+.mat-button{
+        color: white;
+}
+
