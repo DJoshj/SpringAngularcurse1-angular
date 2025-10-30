@@ -36,7 +36,6 @@ export class Login implements OnInit {
 
     if (auth ==true){
       this.router.navigateByUrl("/admin")
-      alert('Bienvenido a nuestro sistema')
     }else{alert('Usuario no registrado')}
   }
 

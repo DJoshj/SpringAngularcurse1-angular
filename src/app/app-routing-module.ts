@@ -10,17 +10,25 @@ import { Estudiantes } from './components/estudiantes/estudiantes';
 import { Pagos } from './components/pagos/pagos';
 import { AdminComponent } from './components/admin-component/admin-component';
 import { App } from './app';
+import { AuthGuard } from './guards/auth-guard';
+import { AuthorizationGuard } from './guards/authorization.guard';
 
 const routes: Routes = [
   { path: "", component: Login },   //{path:"",redirectTo:"/home",pathMatch:"full"},
   { path: "login", component: Login },
   {
-    path: "admin", component: AdminComponent, children: [
+    path: "admin", component: AdminComponent, 
+    canActivate:[AuthGuard],
+    children: [
       { path: "home", component: Home },
       { path: "dashboard", component: Dashboard },
       { path: "profile", component: Profile },
-      { path: "loadEstudiantes", component: LoadEstudiantes },
-      { path: "loadPagos", component: LoadPagos },
+      { 
+        path: "loadEstudiantes", component: LoadEstudiantes, canActivate:[AuthorizationGuard],data:{roles:'ADMIN'}
+      },
+      { 
+        path: "loadPagos", component: LoadPagos, canActivate:[AuthorizationGuard],data:{roles:'ADMIN'}
+      },
       { path: "estudiantes", component: Estudiantes },
       { path: "pagos", component: Pagos }
     ]

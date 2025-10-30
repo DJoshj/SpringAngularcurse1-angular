@@ -1,4 +1,4 @@
-//este guaard autentica si un usuario esta autenticado para poder navegar a no 
+// este guard comprobara si tiene los permisos necesarios
 
 
 import { Injectable } from '@angular/core';
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 
 
   @Injectable()
-  export class AuthGuard {
+  export class AuthorizationGuard {
     constructor(private authService:Auth,private router:Router){
 
     }
@@ -17,16 +17,21 @@ import { Observable } from 'rxjs';
    
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if (this.authService.isAuthenticated) {
-        alert('Acceso aprobado')
-        return true;
-      }
-      else {
-        this.router.navigateByUrl('/login');
-        alert('Mensaje desde el Guard')
-        return false;
-      }
-    }
 
-    
+        let requieredRoules = route.data['roles'];
+        let userRoles = this.authService.roles;
+
+        for(let role of userRoles){
+          if(requieredRoules.includes(role)){
+                 return true;
+          }
+        }
+
+      }
+
+      return false;
+
+
+    }
 
   }
